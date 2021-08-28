@@ -63,6 +63,7 @@ export const getEnvironmentOption = (
   optionName,
   defaultSetting = undefined,
 ) => {
+  // eslint-disable-next-line @endo/no-polymorphic-call
   assert.typeof(
     optionName,
     'string',
@@ -81,6 +82,7 @@ export const getEnvironmentOption = (
     const globalEnv = globalProcess.env;
     if (globalEnv && typeof globalEnv === 'object') {
       if (optionName in globalEnv) {
+        // eslint-disable-next-line @endo/no-polymorphic-call
         console.log(
           `Environment options sniffed and found an apparent ${q(
             optionName,
@@ -112,11 +114,13 @@ freeze(getEnvironmentOption);
  * @param {string} setting
  */
 export const setEnvironmentOption = (optionName, setting) => {
+  // eslint-disable-next-line @endo/no-polymorphic-call
   assert.typeof(
     optionName,
     'string',
     X`Environment option name ${q(optionName)} must be a string.`,
   );
+  // eslint-disable-next-line @endo/no-polymorphic-call
   assert.typeof(
     setting,
     'string',
@@ -127,6 +131,7 @@ export const setEnvironmentOption = (optionName, setting) => {
     globalThis.process = {};
   }
   const globalProcess = globalThis.process;
+  // eslint-disable-next-line @endo/no-polymorphic-call
   assert.typeof(
     globalProcess,
     'object',
@@ -138,12 +143,14 @@ export const setEnvironmentOption = (optionName, setting) => {
     globalProcess.env = {};
   }
   const env = globalProcess.env;
+  // eslint-disable-next-line @endo/no-polymorphic-call
   assert.typeof(
     env,
     'object',
     X`Expected globalThis.process.env, if present, to be an object: ${env}`,
   );
   if (optionName in env) {
+    // eslint-disable-next-line @endo/no-polymorphic-call
     console.log(`Overwriting apparent environment variable ${q(optionName)}`);
   }
   env[optionName] = setting;

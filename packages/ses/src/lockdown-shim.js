@@ -14,7 +14,14 @@
 
 // @ts-check
 
-import { globalThis, is, keys, ownKeys } from './commons.js';
+import {
+  globalThis,
+  is,
+  keys,
+  ownKeys,
+  stringSplit,
+  arrayFilter,
+} from './commons.js';
 import { makeHardener } from './make-hardener.js';
 import { makeIntrinsicsCollector } from './intrinsics.js';
 import whitelistIntrinsics from './whitelist-intrinsics.js';
@@ -143,9 +150,10 @@ export const repairIntrinsics = (
     ),
     // @ts-ignore Result is not undefined if a non-undefined second argument
     // is provided.
-    overrideDebug = getEnvironmentOption('LOCKDOWN_OVERRIDE_DEBUG', '')
-      .split(',')
-      .filter(x => x !== ''),
+    overrideDebug = arrayFilter(
+      stringSplit(getEnvironmentOption('LOCKDOWN_OVERRIDE_DEBUG', ''), ','),
+      x => x !== '',
+    ),
     stackFiltering = getEnvironmentOption(
       'LOCKDOWN_STACK_FILTERING',
       'concise',
